@@ -72,6 +72,8 @@ trello-jira-sync/
 
 4. Set credentials in `.env` or as GitHub secrets.
 
+For detailed configuration of multiple board-project pairs, environment variables, and examples, see the [Detailed Configuration Guide](docs/DETAILED_CONFIG.md).
+
 ## Execution
 
 ### Locally
