@@ -1,0 +1,36 @@
+# config/mappings.yaml
+
+connections:
+  - trello:
+      board_id: "61d4f8a1e4b3a80123456789"
+      api_key: "TRELLO_KEY_X"
+      token: "TRELLO_TOKEN_X"
+    jira:
+      project_key: "PROJ_X"
+      host: "https://empresa.atlassian.net"
+      user: "JIRA_USER_X"
+      api_token: "JIRA_TOKEN_X"
+    sync:
+      interval: "*/5 * * * *"  # Cron expression every 5 minutes
+      fields:
+        - title
+        - description
+        - checklists
+        - comments
+        - attachments
+
+  - trello:
+      board_id: "62a1b8c3d5e6f70234567890"
+      api_key: "TRELLO_KEY_Y"
+      token: "TRELLO_TOKEN_Y"
+    jira:
+      project_key: "PROJ_Y"
+      host: "https://outraempresa.atlassian.net"
+      user: "JIRA_USER_Y"
+      api_token: "JIRA_TOKEN_Y"
+    sync:
+      interval: "0 * * * *"  # Every hour
+      fields:
+        - title
+        - due_date
+        - labels
