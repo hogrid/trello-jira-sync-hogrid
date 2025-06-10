@@ -1,65 +1,65 @@
 # Trello-Jira Sync
 
-Uma solução escalável de sincronização bidirecional entre múltiplos boards do Trello e projetos do Jira, projetada para execução via GitHub Actions.
+A scalable bidirectional synchronization solution between multiple Trello boards and Jira projects, designed to run via GitHub Actions.
 
-## Recursos
+## Features
 
-- **Múltiplos Boards**: Sincronize vários boards do Trello com diferentes projetos Jira simultaneamente
-- **Configuração Flexível**: Defina quais campos sincronizar para cada conexão
-- **Intervalos Personalizáveis**: Configure diferentes intervalos de sincronização por conexão
-- **Sincronização Bidirecional**: Alterações em ambas as plataformas são propagadas
-- **Mapeamentos Avançados**:
-  - Checklists do Trello → Subtasks no Jira
-  - Menções de usuários convertidas entre plataformas
-  - Anexos (links)
-  - Datas e etiquetas
+- **Multiple Boards**: Synchronize various Trello boards with different Jira projects simultaneously
+- **Flexible Configuration**: Define which fields to sync for each connection
+- **Customizable Intervals**: Configure different synchronization intervals per connection
+- **Bidirectional Sync**: Changes on both platforms are propagated
+- **Advanced Mappings**:
+  - Trello checklists → Jira subtasks
+  - User mentions converted between platforms
+  - Attachments (links)
+  - Due dates and labels
 
-## Arquitetura
+## Architecture
 
 ```
 trello-jira-sync/
 ├── src/
 │   ├── core/
-│   │   ├── trello_client.py  # Cliente assíncrono para API do Trello
-│   │   ├── jira_client.py    # Cliente assíncrono para API do Jira
-│   │   └── sync_engine.py    # Motor de sincronização bidirecional
+│   │   ├── trello_client.py  # Async client for Trello API
+│   │   ├── jira_client.py    # Async client for Jira API
+│   │   └── sync_engine.py    # Bidirectional sync engine
 │   ├── workers/
-│   │   └── connection_worker.py # Worker CLI para rodar uma conexão
+│   │   └── connection_worker.py # CLI worker to run a connection
 ├── config/
-│   ├── mappings.yaml  # Configuração de boards/projetos e campos
-│   └── .env.template  # Template para credenciais
+│   ├── mappings.yaml  # Board/project and field configuration
+│   └── .env.template  # Credentials template
 ├── docker/
-│   └── Dockerfile     # Container para deployment
+│   └── Dockerfile     # Container for deployment
 ├── .github/
 │   ├── workflows/
-│   │   └── sync.yml   # Workflow com matriz para múltiplas conexões
+│   │   └── sync.yml   # Workflow with matrix for multiple connections
 └── docs/
-    └── SETUP.md       # Instruções detalhadas de configuração
+    └── SETUP.md       # Detailed configuration instructions
 ```
 
-## Configuração Rápida
+## Quick Setup
 
-1. Clone o repositório:
+1. Clone the repository:
    ```bash
-   git clone https://github.com/emersonnunes/trello-jira-sync.git
+   git clone https://github.com/emernuness/trello-jira-sync.git
    cd trello-jira-sync
    ```
 
-2. Copie o template de variáveis de ambiente:
+2. Copy the environment variables template:
    ```bash
    cp config/.env.template .env
    ```
 
-3. Configure suas conexões em `config/mappings.yaml`:
+3. Configure your connections in `config/mappings.yaml`:
    ```yaml
    connections:
      - trello:
-         board_id: "seu-board-id-1"
+         board_id: "your-board-id-1"
          api_key: "TRELLO_KEY_1"
          token: "TRELLO_TOKEN_1"
        jira:
          project_key: "PROJ_1"
-         host: "https://sua-empresa.atlassian.net"
+         host: "https://your-company.atlassian.net"
          user: "JIRA_USER_1"
          api_token: "JIRA_TOKEN_1"
        sync:
@@ -70,38 +70,38 @@ trello-jira-sync/
            - checklists
    ```
 
-4. Defina as credenciais no `.env` ou como secrets no GitHub.
+4. Set credentials in `.env` or as GitHub secrets.
 
-## Execução
+## Execution
 
-### Localmente
+### Locally
 ```bash
 pip install -r requirements.txt
 python src/workers/connection_worker.py --connection-index 0
 ```
 
 ### Via GitHub Actions
-Configure secrets no repositório GitHub e use o workflow incluído.
+Configure secrets in your GitHub repository and use the included workflow.
 
-### Com Docker
+### With Docker
 ```bash
 docker build -t trello-jira-sync -f docker/Dockerfile .
 docker run --env-file .env trello-jira-sync
 ```
 
-## Monitoramento e Logs
+## Monitoring and Logs
 
-Os logs detalhados são gerados em cada execução, facilitando o diagnóstico de problemas e verificação de sincronizações.
+Detailed logs are generated during each execution, facilitating problem diagnosis and sync verification.
 
-## Contribuindo
+## Contributing
 
-1. Fork o repositório
-2. Crie uma branch para sua feature (`git checkout -b feature/sua-feature`)
-3. Commit suas mudanças (`git commit -m "Adiciona recurso X"`)
-4. Push para sua branch (`git push origin feature/sua-feature`)
-5. Abra um Pull Request
+1. Fork the repository
+2. Create a branch for your feature (`git checkout -b feature/your-feature`)
+3. Commit your changes (`git commit -m "Add feature X"`)
+4. Push to your branch (`git push origin feature/your-feature`)
+5. Open a Pull Request
 
 ---
 
-Desenvolvido por Emerson Nunes
+Developed by Emerson Nunes
 <emerson@hogrid.com>
