@@ -1,0 +1,18 @@
+# config.yaml
+
+trello:
+  board_id: '<TRELLO_BOARD_ID>'
+  list_ids:
+    - '<LIST_ID_1>'
+    - '<LIST_ID_2>'
+
+jira:
+  project_key: '<JIRA_PROJECT_KEY>'
+  customfield_trello_id: 'customfield_10000'
+  user_mapping:
+    trello_user1: jira_user1
+    trello_user2: jira_user2
+
+sync:
+  state_file: 'state.json'
+  sync_interval_minutes: 1
