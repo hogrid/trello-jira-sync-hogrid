@@ -1,2 +1,5 @@
 requests>=2.26.0
 PyYAML>=5.4.1
+aiohttp>=3.8.5
+python-decouple>=3.8
+prometheus-client>=0.17.1
