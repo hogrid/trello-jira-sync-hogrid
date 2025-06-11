@@ -1,7 +1,6 @@
 import aiohttp
 import logging
 from decouple import config
-from .trello_token_manager import TrelloTokenManager
 
 class TrelloClient:
     """
@@ -9,40 +8,35 @@ class TrelloClient:
     """
     BASE_URL = 'https://api.trello.com/1'
 
-    def __init__(self, board_id: str, client_id_env: str, client_secret_env: str, access_token_env: str, refresh_token_env: str):
+    def __init__(self, board_id: str, api_key_env: str, token_env: str):
         self.board_id = board_id
-        self.token_manager = TrelloTokenManager(
-            client_id_env=client_id_env,
-            client_secret_env=client_secret_env,
-            access_token_env=access_token_env,
-            refresh_token_env=refresh_token_env
-        )
+        self.api_key = config(api_key_env)
+        self.token = config(token_env)
+
+        if not self.api_key or not self.token:
+            raise ValueError('Trello key/token não definidos nas variáveis de ambiente')
+
         self.logger = logging.getLogger(__name__)
 
     async def _make_request(self, method: str, endpoint: str, params: dict = None, json: dict = None) -> dict:
         """
-        Faz uma requisição à API do Trello com suporte a refresh token.
+        Faz uma requisição à API do Trello.
         """
         url = f'{self.BASE_URL}/{endpoint}'
-        access_token = await self.token_manager.get_valid_access_token()
 
-        headers = {'Authorization': f'Bearer {access_token}'}
+        # Adiciona os parâmetros de autenticação
+        if params is None:
+            params = {}
+        params.update({
+            'key': self.api_key,
+            'token': self.token
+        })
 
         try:
             async with aiohttp.ClientSession() as session:
-                async with session.request(method, url, params=params, json=json, headers=headers) as resp:
-                    if resp.status == 401:
-                        # Token expirado, tenta atualizar
-                        await self.token_manager.refresh_access_token()
-                        # Tenta novamente com o novo token
-                        access_token = await self.token_manager.get_valid_access_token()
-                        headers = {'Authorization': f'Bearer {access_token}'}
-                        async with session.request(method, url, params=params, json=json, headers=headers) as retry_resp:
-                            retry_resp.raise_for_status()
-                            return await retry_resp.json()
-                    else:
-                        resp.raise_for_status()
-                        return await resp.json()
+                async with session.request(method, url, params=params, json=json) as resp:
+                    resp.raise_for_status()
+                    return await resp.json()
         except Exception as e:
             self.logger.error(f"Erro na requisição ao Trello: {str(e)}")
             raise
@@ -80,8 +74,8 @@ class TrelloClient:
         """
         Adiciona um comentário a um card.
         """
-        data = {'text': text}
-        return await self._make_request('POST', f'cards/{card_id}/actions/comments', json=data)
+        params = {'text': text}
+        return await self._make_request('POST', f'cards/{card_id}/actions/comments', params=params)
 
     async def get_attachments(self, card_id: str):
         """

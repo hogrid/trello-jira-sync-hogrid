@@ -16,10 +16,8 @@ async def sync_changes(connection: Dict, last_sync: str):
 
     trello = TrelloClient(
         board_id=trello_conf['board_id'],
-        client_id_env=trello_conf['client_id'],
-        client_secret_env=trello_conf['client_secret'],
-        access_token_env=trello_conf['access_token'],
-        refresh_token_env=trello_conf['refresh_token']
+        api_key_env=trello_conf['api_key'],
+        token_env=trello_conf['token']
     )
     jira = JiraClient(
         host_env=jira_conf['host'],
@@ -94,5 +92,5 @@ def find_existing_issue(jira: JiraClient, card, connection):
     """
     customfield = connection['jira']['customfield_trello_id']
     jql = f"project={connection['jira']['project_key']} AND \"{customfield}\" = \"{card['id']}\""
-    issues = jira.search_issues(jql)
+    issues = asyncio.run(jira.search_issues(jql))
     return issues[0]['key'] if issues else None
