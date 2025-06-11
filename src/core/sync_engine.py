@@ -23,7 +23,7 @@ async def sync_changes(connection: Dict, last_sync: str):
     jira_user = os.getenv(jira_conf['user'])
     jira_token = os.getenv(jira_conf['api_token'])
     project_key = os.getenv(jira_conf['project_key'])
-    
+
     trello = TrelloClient(
         board_id=board_id,
         api_key=api_key,

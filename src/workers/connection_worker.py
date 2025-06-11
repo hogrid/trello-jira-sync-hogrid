@@ -1,6 +1,7 @@
 import argparse
 import asyncio
 import logging
+import os
 import yaml
 from core.sync_engine import run_sync
 
@@ -30,8 +31,8 @@ def main():
         last_sync = args.last_sync or '1970-01-01T00:00:00Z'
 
         logger.info(f"Iniciando sincronização para conexão {args.connection_index}")
-        logger.info(f"Board Trello: {connection['trello']['board_id']}")
-        logger.info(f"Projeto Jira: {connection['jira']['project_key']}")
+        logger.info(f"Board Trello: {os.getenv(connection['trello']['board_id'], 'NOT_SET')}")
+        logger.info(f"Projeto Jira: {os.getenv(connection['jira']['project_key'], 'NOT_SET')}")
 
         asyncio.run(run_sync(connection, last_sync))
         logger.info("Sincronização concluída com sucesso")
