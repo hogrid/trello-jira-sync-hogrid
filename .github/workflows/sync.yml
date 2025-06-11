@@ -55,6 +55,8 @@ jobs:
         env:
           TRELLO_API_KEY: ${{ secrets.TRELLO_API_KEY }}
           TRELLO_TOKEN: ${{ secrets.TRELLO_TOKEN }}
+          TRELLO_BOARD_ORGANNACT: ${{ secrets.TRELLO_BOARD_ORGANNACT }}
+          JIRA_PROJECT_KEY: ${{ secrets.JIRA_PROJECT_KEY }}
           JIRA_URL: ${{ secrets.JIRA_HOST }}
           JIRA_USER: ${{ secrets.JIRA_USER }}
           JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
