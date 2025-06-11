@@ -19,14 +19,14 @@ Here's a complete example with three different connections:
 connections:
   # Connection 1: Development board to CORE project
   - trello:
-      board_id: "5f8a421c72b6c32141a1e45a"
-      api_key: "TRELLO_KEY_DEV"   # Env variable name
-      token: "TRELLO_TOKEN_DEV"   # Env variable name
+      board_id: ${{ secrets.TRELLO_BOARD_DEV_ID }}
+      api_key: ${{ secrets.TRELLO_API_KEY_DEV }}
+      token: ${{ secrets.TRELLO_TOKEN_DEV }}
     jira:
-      project_key: "CORE"
-      host: "https://company.atlassian.net"
-      user: "JIRA_USER_DEV"       # Env variable name
-      api_token: "JIRA_TOKEN_DEV" # Env variable name
+      project_key: ${{ secrets.JIRA_KEY_DEV }}
+      host: ${{ secrets.JIRA_HOST_DEV }}
+      user: ${{ secrets.JIRA_USER_DEV }}       
+      api_token: ${{ secrets.JIRA_TOKEN_DEV }} 
     sync:
       interval: "*/15 * * * *"    # Every 15 minutes
       fields:
@@ -39,14 +39,14 @@ connections:
 
   # Connection 2: Marketing board to MKT project
   - trello:
-      board_id: "6e2b531d83c7d43252b2f56b"
-      api_key: "TRELLO_KEY_MKT"
-      token: "TRELLO_TOKEN_MKT"
+      board_id: ${{ secrets.TRELLO_BOARD_MKT_ID }}
+      api_key: ${{ secrets.TRELLO_API_KEY_MKT }}
+      token: ${{ secrets.TRELLO_TOKEN_MKT }}
     jira:
-      project_key: "MKT"
-      host: "https://company.atlassian.net"
-      user: "JIRA_USER_MKT"
-      api_token: "JIRA_TOKEN_MKT"
+      project_key: ${{ secrets.JIRA_KEY_MKT }}
+      host: ${{ secrets.JIRA_HOST_MKT }}
+      user: ${{ secrets.JIRA_USER_MKT }}       
+      api_token: ${{ secrets.JIRA_TOKEN_MKT }} 
     sync:
       interval: "0 * * * *"       # Hourly
       fields:
@@ -54,21 +54,6 @@ connections:
         - description
         - labels
 
-  # Connection 3: Support board to HELP project
-  - trello:
-      board_id: "7f1c642e94d8e54363c3g67c"
-      api_key: "TRELLO_KEY_SUPPORT"
-      token: "TRELLO_TOKEN_SUPPORT"
-    jira:
-      project_key: "HELP"
-      host: "https://support.atlassian.net"  # Different Jira instance
-      user: "JIRA_USER_SUPPORT"
-      api_token: "JIRA_TOKEN_SUPPORT"
-    sync:
-      interval: "*/5 * * * *"     # Every 5 minutes
-      fields:
-        - title
-        - comments
 ```
 
 ## Environment Variables Setup
@@ -92,11 +77,6 @@ TRELLO_TOKEN_MKT=k1l2m3n4o5p6q7r8s9t0...
 JIRA_USER_MKT=marketing@company.com
 JIRA_TOKEN_MKT=k1l2m3n4o5p6q7r8s9t0...
 
-# Support team credentials
-TRELLO_KEY_SUPPORT=u1v2w3x4y5z6a7b8c9d0...
-TRELLO_TOKEN_SUPPORT=u1v2w3x4y5z6a7b8c9d0...
-JIRA_USER_SUPPORT=support@company.com
-JIRA_TOKEN_SUPPORT=u1v2w3x4y5z6a7b8c9d0...
 ```
 
 ### GitHub Actions
