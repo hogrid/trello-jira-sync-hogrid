@@ -35,8 +35,8 @@ class TrelloClient:
         try:
             async with aiohttp.ClientSession() as session:
                 async with session.request(method, url, params=params, json=json) as resp:
-                    resp.raise_for_status()
-                    return await resp.json()
+                        resp.raise_for_status()
+                        return await resp.json()
         except Exception as e:
             self.logger.error(f"Erro na requisição ao Trello: {str(e)}")
             raise

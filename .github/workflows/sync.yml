@@ -26,7 +26,11 @@ jobs:
           python - <<EOF
           import yaml, json
           m = yaml.safe_load(open('config/mappings.yaml'))['connections']
-          print('::set-output name=connections::' + json.dumps(m))
+          out = []
+          for i, c in enumerate(m):
+              c['index'] = i
+              out.append(c)
+          print('::set-output name=connections::' + json.dumps(out))
           EOF
 
   sync:
@@ -47,7 +51,7 @@ jobs:
           pip install -r requirements.txt
       - name: Run sync for connection
         run: |
-          PYTHONPATH=$PYTHONPATH:$(pwd)/src python src/workers/connection_worker.py --config config/mappings.yaml --connection-index ${{ strategy.index }}
+          PYTHONPATH=$PYTHONPATH:$(pwd)/src python src/workers/connection_worker.py --config config/mappings.yaml --connection-index ${{ matrix.connection.index }}
         env:
           TRELLO_API_KEY: ${{ secrets.TRELLO_API_KEY }}
           TRELLO_TOKEN: ${{ secrets.TRELLO_TOKEN }}
