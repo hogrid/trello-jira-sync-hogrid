@@ -1,6 +1,5 @@
 import aiohttp
 import logging
-from decouple import config
 
 class TrelloClient:
     """
@@ -8,10 +7,10 @@ class TrelloClient:
     """
     BASE_URL = 'https://api.trello.com/1'
 
-    def __init__(self, board_id: str, api_key_env: str, token_env: str):
+    def __init__(self, board_id: str, api_key: str, token: str):
         self.board_id = board_id
-        self.api_key = config(api_key_env)
-        self.token = config(token_env)
+        self.api_key = api_key
+        self.token = token
 
         if not self.api_key or not self.token:
             raise ValueError('Trello key/token não definidos nas variáveis de ambiente')

@@ -1,7 +1,7 @@
 import asyncio
 import logging
+import os
 from typing import Dict
-from decouple import config
 from .trello_client import TrelloClient
 from .jira_client import JiraClient
 
@@ -15,17 +15,24 @@ async def sync_changes(connection: Dict, last_sync: str):
     jira_conf = connection['jira']
     sync_conf = connection['sync']
 
-    # Lê board_id da variável de ambiente
-    board_id = config(trello_conf['board_id'])
+    # Lê as variáveis de ambiente diretamente
+    board_id = os.getenv('TRELLO_BOARD_ORGANNACT')
+    api_key = os.getenv('TRELLO_API_KEY')
+    token = os.getenv('TRELLO_TOKEN')
+    jira_host = os.getenv('JIRA_URL')
+    jira_user = os.getenv('JIRA_USER')
+    jira_token = os.getenv('JIRA_API_TOKEN')
+    project_key = os.getenv('JIRA_PROJECT_KEY')
+    
     trello = TrelloClient(
         board_id=board_id,
-        api_key_env=trello_conf['api_key'],
-        token_env=trello_conf['token']
+        api_key=api_key,
+        token=token
     )
     jira = JiraClient(
-        host_env=jira_conf['host'],
-        user_env=jira_conf['user'],
-        token_env=jira_conf['api_token']
+        host=jira_host,
+        user=jira_user,
+        api_token=jira_token
     )
 
     try:
@@ -41,7 +48,7 @@ async def sync_changes(connection: Dict, last_sync: str):
 
         # Jira -> Trello
         logger.info(f"Iniciando sincronização Jira -> Trello desde {last_sync}")
-        jql = f"project={jira_conf['project_key']} AND updated > \"{last_sync}\""
+        jql = f"project={project_key} AND updated > \"{last_sync}\""
         issues = await jira.search_issues(jql)
         for issue in issues:
             data = convert_to_trello_fields(issue, sync_conf)
@@ -95,7 +102,7 @@ def find_existing_issue(jira: JiraClient, card, connection):
     """
     customfield = connection['jira']['customfield_trello_id']
     # Lê project_key da variável de ambiente
-    project_key = config(connection['jira']['project_key'])
+    project_key = os.getenv('JIRA_PROJECT_KEY')
     jql = f"project={project_key} AND \"{customfield}\" = \"{card['id']}\""
     issues = asyncio.run(jira.search_issues(jql))
     return issues[0]['key'] if issues else None

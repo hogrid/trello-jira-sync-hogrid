@@ -1,15 +1,14 @@
 import aiohttp
 import logging
-from decouple import config
 
 class JiraClient:
     """
     Async client for Jira REST API using aiohttp.
     """
-    def __init__(self, host_env: str, user_env: str, token_env: str):
-        self.host = config(host_env)
-        self.user = config(user_env)
-        self.api_token = config(token_env)
+    def __init__(self, host: str, user: str, api_token: str):
+        self.host = host
+        self.user = user
+        self.api_token = api_token
 
         if not self.host or not self.user or not self.api_token:
             raise ValueError('Credenciais do Jira não configuradas corretamente')
