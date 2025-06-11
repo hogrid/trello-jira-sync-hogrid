@@ -15,14 +15,14 @@ async def sync_changes(connection: Dict, last_sync: str):
     jira_conf = connection['jira']
     sync_conf = connection['sync']
 
-    # Lê as variáveis de ambiente diretamente
-    board_id = os.getenv('TRELLO_BOARD_ORGANNACT')
-    api_key = os.getenv('TRELLO_API_KEY')
-    token = os.getenv('TRELLO_TOKEN')
-    jira_host = os.getenv('JIRA_URL')
-    jira_user = os.getenv('JIRA_USER')
-    jira_token = os.getenv('JIRA_API_TOKEN')
-    project_key = os.getenv('JIRA_PROJECT_KEY')
+    # Lê as variáveis de ambiente usando os nomes definidos no arquivo de configuração
+    board_id = os.getenv(trello_conf['board_id'])
+    api_key = os.getenv(trello_conf['api_key'])
+    token = os.getenv(trello_conf['token'])
+    jira_host = os.getenv(jira_conf['host'])
+    jira_user = os.getenv(jira_conf['user'])
+    jira_token = os.getenv(jira_conf['api_token'])
+    project_key = os.getenv(jira_conf['project_key'])
     
     trello = TrelloClient(
         board_id=board_id,
