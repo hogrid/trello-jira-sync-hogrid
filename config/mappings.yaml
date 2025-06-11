@@ -2,14 +2,14 @@
 
 connections:
   - trello:
-      board_id: TRELLO_BOARD_ORGANNACT
-      api_key: TRELLO_API_KEY
-      token: TRELLO_TOKEN
+      board_id: ${{ secrets.TRELLO_BOARD_ORGANNACT }}
+      api_key: ${{ secrets.TRELLO_API_KEY }}
+      token: ${{ secrets.TRELLO_TOKEN }}
     jira:
-      project_key: JIRA_PROJECT_KEY
-      host: JIRA_URL
-      user: JIRA_USER
-      api_token: JIRA_API_TOKEN
+      project_key: ${{ secrets.JIRA_PROJECT_KEY }}
+      host: ${{ secrets.JIRA_HOST }}
+      user: ${{ secrets.JIRA_USER }}
+      api_token: ${{ secrets.JIRA_API_TOKEN }}
       customfield_trello_id: customfield_10000  # Campo personalizado do Jira para armazenar o ID do card do Trello
     sync:
       interval: "*/5 * * * *"  # Cron expression every 5 minutes
