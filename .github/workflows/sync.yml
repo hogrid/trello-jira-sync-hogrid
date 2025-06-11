@@ -3,7 +3,7 @@ name: "Multi-Board Sync"
 on:
   workflow_dispatch:
   schedule:
-    - cron: '*/1 * * * *'
+    - cron: '0 * * * *'
 
 jobs:
   setup:
@@ -53,10 +53,10 @@ jobs:
         run: |
           PYTHONPATH=$PYTHONPATH:$(pwd)/src python src/workers/connection_worker.py --config config/mappings.yaml --connection-index ${{ matrix.connection.index }}
         env:
-          TRELLO_API_KEY: ${{ secrets.TRELLO_API_KEY }}
-          TRELLO_TOKEN: ${{ secrets.TRELLO_TOKEN }}
-          TRELLO_BOARD_ORGANNACT: ${{ secrets.TRELLO_BOARD_ORGANNACT }}
-          JIRA_PROJECT_KEY: ${{ secrets.JIRA_PROJECT_KEY }}
-          JIRA_URL: ${{ secrets.JIRA_HOST }}
-          JIRA_USER: ${{ secrets.JIRA_USER }}
-          JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
+          TRELLO_API_KEY: ${{ secrets[matrix.connection.trello.api_key] }}
+          TRELLO_TOKEN: ${{ secrets[matrix.connection.trello.token] }}
+          TRELLO_BOARD_ORGANNACT: ${{ secrets[matrix.connection.trello.board_id] }}
+          JIRA_PROJECT_KEY: ${{ secrets[matrix.connection.jira.project_key] }}
+          JIRA_URL: ${{ secrets[matrix.connection.jira.host] }}
+          JIRA_USER: ${{ secrets[matrix.connection.jira.user] }}
+          JIRA_API_TOKEN: ${{ secrets[matrix.connection.jira.api_token] }}
