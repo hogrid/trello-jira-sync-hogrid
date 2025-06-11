@@ -2,16 +2,14 @@
 
 connections:
   - trello:
-      board_id: "61d4f8a1e4b3a80123456789"
-      client_id: "TRELLO_CLIENT_ID_X"
-      client_secret: "TRELLO_CLIENT_SECRET_X"
-      access_token: "TRELLO_ACCESS_TOKEN_X"
-      refresh_token: "TRELLO_REFRESH_TOKEN_X"
+      board_id: ${{ secrets.TRELLO_BOARD_ORGANNACT }}
+      api_key: ${{ secrets.TRELLO_API_KEY }}
+      token: ${{ secrets.TRELLO_TOKEN }}
     jira:
-      project_key: "PROJ_X"
-      host: "https://empresa.atlassian.net"
-      user: "JIRA_USER_X"
-      api_token: "JIRA_TOKEN_X"
+      project_key: ${{ secrets.JIRA_PROJECT_KEY }}
+      host: ${{ secrets.JIRA_HOST }}
+      user: ${{ secrets.JIRA_USER }}
+      api_token: ${{ secrets.JIRA_API_TOKEN }}
     sync:
       interval: "*/5 * * * *"  # Cron expression every 5 minutes
       fields:
@@ -21,20 +19,3 @@ connections:
         - comments
         - attachments
 
-  - trello:
-      board_id: "62a1b8c3d5e6f70234567890"
-      client_id: "TRELLO_CLIENT_ID_Y"
-      client_secret: "TRELLO_CLIENT_SECRET_Y"
-      access_token: "TRELLO_ACCESS_TOKEN_Y"
-      refresh_token: "TRELLO_REFRESH_TOKEN_Y"
-    jira:
-      project_key: "PROJ_Y"
-      host: "https://outraempresa.atlassian.net"
-      user: "JIRA_USER_Y"
-      api_token: "JIRA_TOKEN_Y"
-    sync:
-      interval: "0 * * * *"  # Every hour
-      fields:
-        - title
-        - due_date
-        - labels
