@@ -54,14 +54,14 @@ trello-jira-sync/
    ```yaml
    connections:
      - trello:
-        board_id: ${{ secrets.TRELLO_BOARD_DEV_ID }}
-        api_key: ${{ secrets.TRELLO_API_KEY_DEV }}
-        token: ${{ secrets.TRELLO_TOKEN_DEV }}
-    jira:
-        project_key: ${{ secrets.JIRA_KEY_DEV }}
-        host: ${{ secrets.JIRA_HOST_DEV }}
-        user: ${{ secrets.JIRA_USER_DEV }}       
-        api_token: ${{ secrets.JIRA_TOKEN_DEV }} 
+         board_id: "your-board-id-1"
+         api_key: "TRELLO_KEY_1"
+         token: "TRELLO_TOKEN_1"
+       jira:
+         project_key: "PROJ_1"
+         host: "https://your-company.atlassian.net"
+         user: "JIRA_USER_1"
+         api_token: "JIRA_TOKEN_1"
        sync:
          interval: "*/5 * * * *"
          fields:
