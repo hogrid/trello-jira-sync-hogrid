@@ -2,6 +2,10 @@
 
 trello:
   board_id: '<TRELLO_BOARD_ID>'
+  client_id: 'TRELLO_CLIENT_ID'
+  client_secret: 'TRELLO_CLIENT_SECRET'
+  access_token: 'TRELLO_ACCESS_TOKEN'
+  refresh_token: 'TRELLO_REFRESH_TOKEN'
   list_ids:
     - '<LIST_ID_1>'
     - '<LIST_ID_2>'

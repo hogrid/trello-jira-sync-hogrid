@@ -3,8 +3,10 @@
 connections:
   - trello:
       board_id: "61d4f8a1e4b3a80123456789"
-      api_key: "TRELLO_KEY_X"
-      token: "TRELLO_TOKEN_X"
+      client_id: "TRELLO_CLIENT_ID_X"
+      client_secret: "TRELLO_CLIENT_SECRET_X"
+      access_token: "TRELLO_ACCESS_TOKEN_X"
+      refresh_token: "TRELLO_REFRESH_TOKEN_X"
     jira:
       project_key: "PROJ_X"
       host: "https://empresa.atlassian.net"
@@ -21,8 +23,10 @@ connections:
 
   - trello:
       board_id: "62a1b8c3d5e6f70234567890"
-      api_key: "TRELLO_KEY_Y"
-      token: "TRELLO_TOKEN_Y"
+      client_id: "TRELLO_CLIENT_ID_Y"
+      client_secret: "TRELLO_CLIENT_SECRET_Y"
+      access_token: "TRELLO_ACCESS_TOKEN_Y"
+      refresh_token: "TRELLO_REFRESH_TOKEN_Y"
     jira:
       project_key: "PROJ_Y"
       host: "https://outraempresa.atlassian.net"
